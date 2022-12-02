@@ -8,7 +8,7 @@ according to details specified in the .info file, and macros provided on the com
 To use as part of the build process in Visual Studio, in project properties, navigate to:  
 *"Configuration Properties / Build Events / Pre-Build Event"* and add similar line as following to the *"Command Line"* field:
 
-    "$(SolutionDir)defprep.exe"
+    "$(SolutionDir)defprep64.exe"
         in:"$(ProjectDir)$(AssemblyName)-template.def"
         out:"$(ProjectDir)$(AssemblyName).def"
         info:"$(ProjectDir)$(AssemblyName).info"
@@ -23,6 +23,38 @@ To use as part of the build process in Visual Studio, in project properties, nav
 * **out** specified DEF file to generate, used to link the project
 * **info** specifies .info file as specified in [RsrcGen](https://github.com/tringi/rsrcgen) project  
   This is regular INI file and `[description]` section is searched for `internalname` string and `major` and `minor` version numbers.
+
+## Example
+
+somedll-template.def:
+
+    LIBRARY #
+    VERSION #.#
+    EXPORTS
+        ; Exported variable
+        data=?data@NAMESPACE@@3PBUStructure@1@B    #x86
+        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #x64
+        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #ARM64
+
+somedll.info (partial):
+
+    [description]
+        internalname = SOMEDLL
+        major = 3
+        minor = 14
+
+Pre-Build Event command line:
+
+    defprep64.exe  in:somedll-template.def  info:somedll.info  out:somedll.def  x86
+
+*You'd use $(ProcessorArchitecture) instead "x86" to pass the current architecture*
+
+Resulting **somedll.def**:
+
+    LIBRARY "SOMEDLL"
+    VERSION 3.14
+    EXPORTS
+    data=?data@NAMESPACE@@3PBUStructure@1@B
 
 ## Syntax
 
