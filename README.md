@@ -19,10 +19,10 @@ To use as part of the build process in Visual Studio, in project properties, nav
 
 ## Parameters
 
-* **in** specifies DEF file template, see Syntax below
-* **out** specified DEF file to generate, used to link the project
-* **info** specifies .info file as specified in [RsrcGen](https://github.com/tringi/rsrcgen) project  
-  This is regular INI file and `[description]` section is searched for `internalname` string and `major` and `minor` version numbers.
+* **in** - specifies DEF file template, see Syntax below
+* **out** - specifies DEF file to generate, used to link the project
+* **info** - specifies .info file as specified in [RsrcGen](https://github.com/tringi/rsrcgen) project
+  * This is regular INI file and `[description]` section is searched for `internalname` string and `major` and `minor` version numbers.
 
 ## Example
 
