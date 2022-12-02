@@ -4,14 +4,14 @@
 [description]
 	product 		= DEF Preprocessor
 	filename		= %targetfilename%
-	filedescription		= DLL Module-Definition Files Preprocessor
+	filedescription		= DLL Module-Definition (.Def) Files Preprocessor
 	internalname		= DefPrep
 	companyname		= TRIM CORE SOFTWARE s.r.o.
 
 	major = 1
 	minor = 0
 	patch = 0
-	build = 24
+	build = 27
 
 [versioninfo]
 	filename	= %dir%\%internalname%-vi.rc
