@@ -3,4 +3,13 @@
   <ItemGroup>
     <ClCompile Include="defprep.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="defprep.info" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="DefPrep.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DefPrep-vi.rc" />
+  </ItemGroup>
 </Project>
