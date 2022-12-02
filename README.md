@@ -33,7 +33,7 @@ somedll-template.def:
     EXPORTS
         ; Exported variable
         data=?data@NAMESPACE@@3PBUStructure@1@B    #x86
-        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #x64
+        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #amd64
         data=?data@NAMESPACE@@3PEBUStructure@1@EB  #ARM64
 
 somedll.info (partial):
