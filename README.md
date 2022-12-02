@@ -58,7 +58,7 @@ Resulting **somedll.def**:
 
 ## Syntax
 
-The template files are regular DEF files, where following lines are replaced:
+The template files are regular DEF files, where following lines (if present) are replaced:
 
 * `LIBRARY #` is replaced with `LIBRARY "text"` where *text* is `internalname` from *info* file described above
 * `VERSION #.#` is replaced with `VERSION 123.456` where 123 and 456 are `major` and `minor` numbers from *info* file described above
@@ -67,12 +67,10 @@ Text lines may end with `#`-starting directives, the rules are following:
 
 * Line without any `#` character are directly copied to output
 * Line may contain more than one directive
-  * All directives must match for line to be copied to output
-
+  * All directives must match, for the line to be copied to output
 * `#ABC` directives match any `ABC` or `ABC:anything` command-line parameter
 * `#!ABC` directives only match if there are no `ABC` or `ABC:anything` command-line parameters
 * `#ABC=DEF` directives only match if there's at least one `ABC:DEF` command-line parameter, i.e. the value must match
-
 * If all directives on a line match, the line is copied to output, with directives removed
 
 ## Notes
