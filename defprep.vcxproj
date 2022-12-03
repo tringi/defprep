@@ -101,31 +101,37 @@
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)debug\$(Platform)\</OutDir>
     <IntDir>$(SolutionDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)32</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <OutDir>$(SolutionDir)builds\</OutDir>
     <IntDir>$(SolutionDir)temp\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)32</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(SolutionDir)temp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)debug\$(Platform)\</OutDir>
+    <TargetName>$(ProjectName)64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(SolutionDir)temp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)debug\$(Platform)\</OutDir>
+    <TargetName>$(ProjectName)A64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(SolutionDir)temp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)builds\</OutDir>
+    <TargetName>$(ProjectName)64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <GenerateManifest>false</GenerateManifest>
     <IntDir>$(SolutionDir)temp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)builds\</OutDir>
+    <TargetName>$(ProjectName)A64</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -140,7 +146,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MinimumRequiredVersion>5.1</MinimumRequiredVersion>
-      <OutputFile>$(OutDir)$(TargetName)32$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
       <Command>"$(SolutionDir)tools\rsrcgen.exe" "$(ProjectDir)$(AssemblyName).info" "dir=$(ProjectDir)\" debug=$(UseDebugLibraries) platform=$(ProcessorArchitecture) targetfilename=$(TargetFileName)</Command>
@@ -171,7 +177,7 @@
       <MergeSections>
       </MergeSections>
       <MinimumRequiredVersion>5.1</MinimumRequiredVersion>
-      <OutputFile>$(OutDir)$(TargetName)32$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
       <Command>"$(SolutionDir)tools\rsrcgen.exe" "$(ProjectDir)$(AssemblyName).info" "dir=$(ProjectDir)\" debug=$(UseDebugLibraries) platform=$(ProcessorArchitecture) targetfilename=$(TargetFileName)</Command>
@@ -190,7 +196,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <MinimumRequiredVersion>5.2</MinimumRequiredVersion>
-      <OutputFile>$(OutDir)$(TargetName)64$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
       <Command>"$(SolutionDir)tools\rsrcgen.exe" "$(ProjectDir)$(AssemblyName).info" "dir=$(ProjectDir)\" debug=$(UseDebugLibraries) platform=$(ProcessorArchitecture) targetfilename=$(TargetFileName)</Command>
@@ -208,7 +214,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <OutputFile>$(OutDir)$(TargetName)A64$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
       <Command>"$(SolutionDir)tools\rsrcgen.exe" "$(ProjectDir)$(AssemblyName).info" "dir=$(ProjectDir)\" debug=$(UseDebugLibraries) platform=$(ProcessorArchitecture) targetfilename=$(TargetFileName)</Command>
@@ -238,7 +244,7 @@
       <MergeSections>
       </MergeSections>
       <MinimumRequiredVersion>5.2</MinimumRequiredVersion>
-      <OutputFile>$(OutDir)$(TargetName)64$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
       <Command>"$(SolutionDir)tools\rsrcgen.exe" "$(ProjectDir)$(AssemblyName).info" "dir=$(ProjectDir)\" debug=$(UseDebugLibraries) platform=$(ProcessorArchitecture) targetfilename=$(TargetFileName)</Command>
@@ -268,7 +274,7 @@
       <SetChecksum>true</SetChecksum>
       <MergeSections>
       </MergeSections>
-      <OutputFile>$(OutDir)$(TargetName)A64$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <PreBuildEvent>
       <Command>"$(SolutionDir)tools\rsrcgen.exe" "$(ProjectDir)$(AssemblyName).info" "dir=$(ProjectDir)\" debug=$(UseDebugLibraries) platform=$(ProcessorArchitecture) targetfilename=$(TargetFileName)</Command>
