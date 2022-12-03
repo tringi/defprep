@@ -287,11 +287,11 @@ int main () {
                                 HANDLE hOut;
 
                                 if (auto output = option (argc, argw, L"out")) {
-                                    hOut = CreateFile (output, GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, 0, NULL);
+                                    hOut = CreateFile (output, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
                                     std::wprintf (L"> %s", output);
                                 } else {
                                     auto defout = std::wstring (input) + L".def";
-                                    hOut = CreateFile (defout.c_str (), GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, 0, NULL);
+                                    hOut = CreateFile (defout.c_str (), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, 0, NULL);
                                     std::wprintf (L"> %s", defout.c_str ());
                                 }
                                 if (hOut != INVALID_HANDLE_VALUE) {
