@@ -1,19 +1,50 @@
 # DLL Module-Definition (.Def) Files Preprocessor
 
 Generates [.def](https://learn.microsoft.com/en-us/cpp/build/reference/module-definition-dot-def-files?view=msvc-170) file for your EXE or DLL,
-according to details specified in the .info file, and macros provided on the command line.
+according *annotations* provided on the command line, and optionally from details specified in the .info (ini) file.
+
+## Example
+
+somedll-template.def (containing placeholders and annotations):
+
+    LIBRARY #
+    VERSION #.#
+    EXPORTS
+        data=?data@NAMESPACE@@3PBUStructure@1@B    #x86
+        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #amd64
+        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #ARM64
+
+somedll.info (partial, optional):
+
+    [description]
+        internalname = SOMEDLL
+        major = 3
+        minor = 14
+
+Pre-Build Event command line (passing annotations as arguments):
+
+    defprep64.exe  in:somedll-template.def  info:somedll.info  out:somedll.def  x86
+
+* You'd use `$(ProcessorArchitecture)` instead "x86" to pass the current architecture
+* You can use syntax `platform:$(ProcessorArchitecture)` then the annotation would need to say `#platform=x86`
+
+Resulting **somedll.def**:
+
+    LIBRARY "SOMEDLL"
+    VERSION 3.14
+    EXPORTS
+    data=?data@NAMESPACE@@3PBUStructure@1@B
 
 ## Usage
 
-To use as part of the build process in Visual Studio, in project properties, navigate to:  
+To use as part of the build process in Visual Studio, in project properties, navigate to:
 *"Configuration Properties / Build Events / Pre-Build Event"* and add similar line as following to the *"Command Line"* field:
 
     "$(SolutionDir)defprep64.exe"
         in:"$(ProjectDir)$(AssemblyName)-template.def"
         out:"$(ProjectDir)$(AssemblyName).def"
         info:"$(ProjectDir)$(AssemblyName).info"
-        platform:$(PlatformTarget)
-        parameter:value
+        parameter:value [...]
 
 *Line breaks added for readability*
 
@@ -24,54 +55,23 @@ To use as part of the build process in Visual Studio, in project properties, nav
 * **info** - specifies .info file as specified in [RsrcGen](https://github.com/tringi/rsrcgen) project
   * This is regular INI file and `[description]` section is searched for `internalname` string and `major` and `minor` version numbers.
 
-## Example
-
-somedll-template.def:
-
-    LIBRARY #
-    VERSION #.#
-    EXPORTS
-        ; Exported variable
-        data=?data@NAMESPACE@@3PBUStructure@1@B    #x86
-        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #amd64
-        data=?data@NAMESPACE@@3PEBUStructure@1@EB  #ARM64
-
-somedll.info (partial):
-
-    [description]
-        internalname = SOMEDLL
-        major = 3
-        minor = 14
-
-Pre-Build Event command line:
-
-    defprep64.exe  in:somedll-template.def  info:somedll.info  out:somedll.def  x86
-
-*You'd use $(ProcessorArchitecture) instead "x86" to pass the current architecture*
-
-Resulting **somedll.def**:
-
-    LIBRARY "SOMEDLL"
-    VERSION 3.14
-    EXPORTS
-    data=?data@NAMESPACE@@3PBUStructure@1@B
-
 ## Syntax
 
-The template files are regular DEF files, where following lines (if present) are replaced:
+The template files are regular DEF files, where following placeholder lines (if present) are replaced:
 
-* `LIBRARY #` is replaced with `LIBRARY "text"` where *text* is `internalname` from *info* file described above
-* `VERSION #.#` is replaced with `VERSION 123.456` where 123 and 456 are `major` and `minor` numbers from *info* file described above
+* `LIBRARY #` is replaced with `LIBRARY "text"` where *text* is `internalname` from the *info* file described above
+* `VERSION #.#` is replaced with `VERSION 123.456` where 123 and 456 are `major` and `minor` numbers also from the *info* file described above
 
-Text lines may end with `#`-starting directives, the rules are following:
+Text lines may end with `#`-starting annotations. The rules are following:
 
-* Line without any `#` character are directly copied to output
-* Line may contain more than one directive
-  * All directives must match, for the line to be copied to output
-* `#ABC` directives match any `ABC` or `ABC:anything` command-line parameter
-* `#!ABC` directives only match if there are no `ABC` or `ABC:anything` command-line parameters
-* `#ABC=DEF` directives only match if there's at least one `ABC:DEF` command-line parameter, i.e. the value must match
-* If all directives on a line match, the line is copied to output, with directives removed
+* Line without any `#` character is directly copied to output
+* Line may contain more than one annotation
+  * All annotations must match, for the line to be copied to output
+* `#ABC` annotation match if any `ABC` or `ABC:anything` command-line parameter is present
+* `#!ABC` annotation only match if there are no `ABC` or `ABC:anything` command-line parameters present
+* `#ABC=DEF` annotations match only if there's at least one `ABC:DEF` command-line parameter
+  * the value part of the parameter must match
+* If all annotation on a line match, the line is copied to output, with annotations removed
 
 ## Notes
 
